@@ -4,7 +4,7 @@ import GameLogic from "./Services/GameLogic";
 
 const playerMode = "PVC";
 const comMode = "CVC";
-const moveIntervalSeconds = 5;
+const moveIntervalInSeconds = 5;
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -47,84 +47,96 @@ class App extends React.Component {
   renderGameSection = () => {
     return (
       <div className="game-section">
-        <div className="player2-section">
-          <div className="player-history-section">
-            Player 2 history:
-            {this.state.player2History.map(move => {
-              return (
-                <img src={GameLogic.moveCharacteristics[move].img} alt={move} />
-              );
-            })}
-          </div>
-          <div className="player-current-section">
-            {this.state.player2CurrentMove !== null && (
-              <img
-                src={
-                  GameLogic.moveCharacteristics[this.state.player2CurrentMove]
-                    .img
-                }
-                alt={this.state.player2CurrentMove}
-              />
-            )}
-          </div>
-        </div>
-        <div className="game-timer-section">
-          <div className="game-timer">
-            <div>Timer</div>
-            <div>{this.state.countdownTimer}</div>
-          </div>
-        </div>
-        <div className="player1-section">
-          <div className="player-current-section">
-            {this.state.player1CurrentMove !== null ? (
-              <img
-                src={
-                  GameLogic.moveCharacteristics[this.state.player1CurrentMove]
-                    .img
-                }
-                alt={this.state.player1CurrentMove}
-              />
-            ) : (
-              this.state.mode === playerMode && (
-                <Fragment>
-                  Please select a move
-                  <div className="player-select-move">
-                    {GameLogic.moveList.map(move => {
-                      return (
-                        <img
-                          className={`player-select-${move}`}
-                          src={GameLogic.moveCharacteristics[move].img}
-                          alt={move}
-                          onClick={() => {
-                            this.setState({ player1CurrentMove: move });
-                          }}
-                        />
-                      );
-                    })}
-                  </div>
-                </Fragment>
-              )
-            )}
-          </div>
-          <div className="player-history-section">
-            Player 1 history:
-            {this.state.player1History.map(move => {
-              if (move !== null) {
-                return (
-                  <img
-                    src={GameLogic.moveCharacteristics[move].img}
-                    alt={move}
-                  />
-                );
-              }
-            })}
-          </div>
-        </div>
+        {this.renderPlayer2Section()}
+        {this.renderTimerSection()}
+        {this.renderPlayer1Section()}
         {this.renderResults()}
       </div>
     );
   };
 
+  renderPlayer2Section = () => {
+    return (
+      <div className="player2-section">
+        <div className="player-history-section">
+          Player 2 history:
+          {this.state.player2History.map(move => {
+            return (
+              <img src={GameLogic.moveCharacteristics[move].img} alt={move} />
+            );
+          })}
+        </div>
+        <div className="player-current-section">
+          {this.state.player2CurrentMove !== null && (
+            <img
+              src={
+                GameLogic.moveCharacteristics[this.state.player2CurrentMove].img
+              }
+              alt={this.state.player2CurrentMove}
+            />
+          )}
+        </div>
+      </div>
+    );
+  };
+
+  renderTimerSection = () => {
+    return (
+      <div className="game-timer-section">
+        <div className="game-timer">
+          <div>Timer</div>
+          <div>{this.state.countdownTimer}</div>
+        </div>
+      </div>
+    );
+  };
+
+  renderPlayer1Section = () => {
+    return (
+      <div className="player1-section">
+        <div className="player-current-section">
+          {this.state.player1CurrentMove !== null ? (
+            <img
+              src={
+                GameLogic.moveCharacteristics[this.state.player1CurrentMove].img
+              }
+              alt={this.state.player1CurrentMove}
+            />
+          ) : (
+            this.state.mode === playerMode && (
+              <Fragment>
+                Please select a move
+                <div className="player-select-move">
+                  {GameLogic.moveList.map(move => {
+                    return (
+                      <img
+                        className={`player-select-${move}`}
+                        src={GameLogic.moveCharacteristics[move].img}
+                        alt={move}
+                        onClick={() => {
+                          this.setState({ player1CurrentMove: move });
+                        }}
+                      />
+                    );
+                  })}
+                </div>
+              </Fragment>
+            )
+          )}
+        </div>
+        <div className="player-history-section">
+          Player 1 history:
+          {this.state.player1History.map(move => {
+            if (move !== null) {
+              return (
+                <img src={GameLogic.moveCharacteristics[move].img} alt={move} />
+              );
+            }
+          })}
+        </div>
+      </div>
+    );
+  };
   renderResults = () => {
     return (
       <Fragment>
@@ -185,7 +197,7 @@ class App extends React.Component {
   };
 
   startRound = () => {
-    this.setState({ countdownTimer: moveIntervalSeconds });
+    this.setState({ countdownTimer: moveIntervalInSeconds });
     const roundRef = setInterval(() => {
       if (this.state.countdownTimer === 0) {
         this.generateMoves();
