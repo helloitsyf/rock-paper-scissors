@@ -85,21 +85,25 @@ class App extends React.Component {
                 alt={this.state.player1CurrentMove}
               />
             ) : (
-              <div className="player-select-move">
-                {this.state.mode === playerMode &&
-                  GameLogic.moveList.map(move => {
-                    return (
-                      <img
-                        className={`player-select-${move}`}
-                        src={GameLogic.moveCharacteristics[move].img}
-                        alt={move}
-                        onClick={() => {
-                          this.setState({ player1CurrentMove: move });
-                        }}
-                      />
-                    );
-                  })}
-              </div>
+              this.state.mode === playerMode && (
+                <Fragment>
+                  Please select a move
+                  <div className="player-select-move">
+                    {GameLogic.moveList.map(move => {
+                      return (
+                        <img
+                          className={`player-select-${move}`}
+                          src={GameLogic.moveCharacteristics[move].img}
+                          alt={move}
+                          onClick={() => {
+                            this.setState({ player1CurrentMove: move });
+                          }}
+                        />
+                      );
+                    })}
+                  </div>
+                </Fragment>
+              )
             )}
           </div>
           <div className="player-history-section">
