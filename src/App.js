@@ -203,6 +203,9 @@ class App extends React.Component {
       this.setState({
         player2CurrentMove: GameLogic.generateRandomMove()
       });
+      if (this.state.player1CurrentMove === null) {
+        this.setState({ player1CurrentMove: "default" });
+      }
     }
   };
 

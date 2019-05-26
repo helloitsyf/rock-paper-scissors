@@ -20,6 +20,9 @@ const moveCharacteristics = {
     wins: { paper: true },
     loses: { rock: true },
     img: "/Assets/scissors.png"
+  },
+  default: {
+    img: "/Assets/default.png"
   }
 };
 
@@ -29,7 +32,7 @@ const generateRandomMove = () => {
 };
 
 const determineOutcome = ({ player1Move, player2Move }) => {
-  if (player1Move === null) {
+  if (player1Move === "default") {
     return player2Move;
   }
 

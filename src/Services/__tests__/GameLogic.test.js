@@ -11,7 +11,7 @@ describe("determineOutcome", () => {
   it("should declare player 2 as winner if player 1 does not make a move in time", () => {
     let player2Move = GameLogic.generateRandomMove();
     let outcome = GameLogic.determineOutcome({
-      player1Move: null,
+      player1Move: "default",
       player2Move
     });
     expect(outcome).toBe(player2Move);
